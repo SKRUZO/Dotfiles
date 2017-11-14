@@ -12,7 +12,7 @@
 set $mod Mod4
 #smart_gaps on
 gaps inner 10
-gaps outer 15
+gaps outer 5
 new_window pixel 0
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -29,10 +29,10 @@ bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+q kill
 
 # i3 lock
-bindsym $mod+shift+x exec ./lock.sh
+bindsym $mod+shift+x exec lock.sh
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show run
+# start program launcher
+bindsym $mod+d exec rofi -show run -lines 5 -theme ~/.config/rofi/gruvboxdark 
 
 # change focus
 bindsym $mod+j focus left
@@ -155,13 +155,13 @@ bindsym $mod+r mode "resize"
 
 # media keybindings
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 10%+ #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 10%- #decrease sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 1%+ #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 1%- #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id amixer set Master 0 # mute sound
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec brightness.sh # open brightness file for edit
+bindsym XF86MonBrightnessDown exec brightness.sh # open brightness file for edit
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
@@ -174,27 +174,22 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # Color Definition
 	# Window Colors
-set $bg-color		#282828
-set $txt-color		#949494
-set $in-bg-color	#32302f
-set $in-txt-color	#544c42
+set $bg-color		#1d2021
+set $txt-color		#fbf1c7
+set $in-bg-color	#282828
+set $in-txt-color	#928374
 set $urg-bg-color	#cc241d
 set $urg-txt-color	#e6928e
-
-set_from_resource $bg i3wm.color1 #f0f0f0
-set_from_resource $fg i3wm.color5 #f0f0f0
-set_from_resource $urg i3wm.color6 #ff0000
-
 	# Bar Colors
 
 
 
 # Window Color Application
 # 			border		background	text		indicator
-client.focused		$bg		$bg		$fg		$txt-color
-client.focused_inactive $bg		$bf		$fg		$txt-color
-client.unfocused	$bg		$bg		$fg		$txt-color
-client.urgent		$urg		$urg		$fg		$txt-color
+client.focused		$bg-color	$bg-color	$txt-color	$txt-color
+client.focused_inactive $in-bg-color	$in-bg-color	$in-txt-color	$txt-color
+client.unfocused	$in-bg-color	$in-bg-color	$in-txt-color	$txt-color
+client.urgent		$urg-bg-color	$urg-bg-color	$urg-txt-color	$txt-color
 
 hide_edge_borders both
 
@@ -205,22 +200,24 @@ hide_edge_borders both
 
     colors {
 	#			border		background	text
-	focused_workspace	$bg		$bg		$fg
-	inactive_workspace	$bg		$bg		$fg
-	urgent_workspace	$urg		$urg		$fg
+	focused_workspace	$bg-color	$bg-color	$txt-color
+	inactive_workspace	$in-bg-color	$in-bg-color	$in-txt-color
+	urgent_workspace	$urg-bg-color	$urg-bg-color	$urg-txt-color
 	#		variable
-	separator	$fg
-	background	$bg
-	statusline	$fg
+	separator	$in-txt-color
+	background	$bg-color
+	statusline	$txt-color
     }
 }
 
 # Autostart Programs
-#exec_always feh --bg-fill $wall
-exec_always wal -c
-exec_always wal -i ~/Pictures/wallpaper.jpg
+exec_always feh --bg-fill /home/calvin/Pictures/wallpaper.jpg
 exec_always xrdb ~/.Xresources
+exec_always xset -b
+exec compton 
 
 # Class Assignment
 assign [class="Firefox"] $ws2
-assign [class="Google Play Music Desktop Player"] $ws10
+
+# Window Specific Control
+
