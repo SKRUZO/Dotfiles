@@ -42,5 +42,8 @@ Server = http://repo.archlinux.fr/$arch
 ```
 7. `sudo pacman -Syu yaourt` to synchronize packages and update, as well as install Yaourt.
 8. Install window manager of choice. In my case, `yaourt i3-gaps`
-9. Install other cursory programs as needed. Thinks like `firefox i3lock dmenu rofi htop ranger compton i3blocks-gaps-git `
-10. If desired, copy over dotfiles, fonts, scripts, and images from GitHub repo.
+9. `vim ~/.xinitrc` and comment out unneeded lines. Append `exec i3`
+10. Install other cursory programs as needed. Thinks like `firefox i3lock dmenu rofi htop ranger compton i3blocks-gaps-git `
+11. If desired, clone dotfiles, fonts, scripts, and images from GitHub repo.
+
+### `startx` and enjoy!
